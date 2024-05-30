@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rusheel - Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<style>
+        /* Custom CSS for positioning the widget */
+        .widget-container {
+            position: fixed;
+            top: 50%;
+            right: 20px; /* Adjust the distance from the right side */
+            transform: translateY(-50%);
+            z-index: 1000; /* Ensure the widget is on top of other content */
+        }
+    </style>
+</head>
+<body>
+    <!-- Background video -->
+    <video autoplay muted loop id="background-video">
+        <source src="{{ url_for('static', filename='videos/background.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <div class="container">
+        <!-- Side menu -->
+        <div class="side-menu">
+            <ul>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#experience">EXPERIENCE</a></li>
+                <li><a href="#education">EDUCATION</a></li>
+                <li><a href="#skills">SKILLS</a></li>
+                <li><a href="#projects">PROJECTS</a></li>
+                <li><a href="#interests">INTERESTS</a></li>
+                <li><a href="#certifications">CERTIFICATIONS</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main content -->
+        <div class="main-content">
+            <div class="header" id="about">
+                <h1>{{ resume.name }}</h1>
+                <h2>{{ resume.title }}</h2>
+                <p>Email: <a href="mailto:{{ resume.email }}">{{ resume.email }}</a></p>
+                <p>Location: {{ resume.location }}</p>
+                <h3>About</h3>
+                <p>{{ resume.about }}</p>
+            </div>
+            
+            <!-- Experience section -->
+            <div class="section" id="experience">
+                <h3>$ cat 'Experience'</h3>
+                <ul>
+                    {% for exp in resume.experience %}
+                    <li style="margin-bottom: 20px;">
+                        <strong>{{ exp.title }}</strong><br>
+                        {{ exp.company }}, {{ exp.location }} ({{ exp.dates }})<br>
+                        {{ exp.description }}
+                        <ul>
+                            {% for point in exp.bullet_points %}
+                            <li>{{ point }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Education section -->
+            <div class="section" id="education">
+                <h3>$ echo 'Education'</h3>
+                <ul>
+                    {% for edu in resume.education %}
+                    <li style="margin-bottom: 20px;">
+                        <strong>{{ edu.degree }}</strong> in {{ edu.major }}<br>
+                        {{ edu.university }}, {{ edu.location }} ({{ edu.dates }})<br>
+                        GPA: {{ edu.gpa }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Skills section -->
+            <div class="section" id="skills">
+                <h3>$ ls 'Skills'</h3>
+                <ul>
+                    {% for category, skills in resume.skills.items() %}
+                    <li><strong>{{ category }}</strong><br>
+                        <ul>
+                            {% for skill in skills %}
+                            <li>{{ skill }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+	 <!-- CTF section -->
+            <div class="section" id="ctf">
+                <h3>$ grep CTF's</h3>
+                <ul>
+                    {% for ctf in resume.ctf %}
+                    <li>{{ ctf }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            
+            <!-- Projects section -->
+            <div class="section" id="projects">
+                <h3>$ find . -name 'Projects'</h3>
+                <ul>
+                    {% for project in resume.projects %}
+                    <li>{{ project }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Interests section -->
+            <div class="section" id="interests">
+                <h3>$ chmod +x 'Interests'</h3>
+                <p>{{ resume.interests }}</p>
+            </div>
+            
+            <!-- Certifications section -->
+            <div class="section" id="certifications">
+                <h3>$ locate 'Certifications'</h3>
+                <ul>
+                    {% for certification in resume.certifications %}
+                    <li>
+                        {% if certification.url %}
+                        <a href="{{ certification.url }}" target="_blank">{{ certification.name }}</a>
+                        {% else %}
+                        {{ certification.name }}
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+<div class="widget-container">
+            <iframe width="370" height="370" src="https://cybermap.kaspersky.com/en/widget/dynamic/dark" frameborder="0"></iframe>
+        </div>
+    </div>
+</body>
+</html>
